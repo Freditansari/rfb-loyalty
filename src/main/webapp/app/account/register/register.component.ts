@@ -1,9 +1,12 @@
 import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { Register } from './register.service';
 import { LoginModalService, EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '../../shared';
+import { RfbLocation } from '../../entities/rfb-location/rfb-location.model';
+import { RfbLocationService } from '../../entities/rfb-location/rfb-location.service';
+import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-register',
@@ -19,18 +22,30 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
+    predicate: any;
+    reverse: any;
+    rfbLocations: RfbLocation[];
+    page: any;
+    itemsPerPage: any;
+    links: any;
+    totalItems: any;
+    queryCount: any;
 
     constructor(
+        private rfbLocationService: RfbLocationService,
         private loginModalService: LoginModalService,
         private registerService: Register,
         private elementRef: ElementRef,
-        private renderer: Renderer
+        private renderer: Renderer,
+        private jhiAlertService: JhiAlertService,
+        private parseLinks: JhiParseLinks
     ) {
     }
 
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
+        this.loadAllLocation();
     }
 
     ngAfterViewInit() {
@@ -52,8 +67,36 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         }
     }
 
+    loadAllLocation() {
+        this.rfbLocationService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort()}).subscribe(
+                (res: HttpResponse<RfbLocation[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+
     openLogin() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    sort() {
+        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        if (this.predicate !== 'id') {
+            result.push('id');
+        }
+        return result;
+    }
+
+    private onSuccess(data, headers) {
+        this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count');
+        this.queryCount = this.totalItems;
+        this.rfbLocations = data;
+    }
+    private onError(error) {
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     private processError(response: HttpErrorResponse) {

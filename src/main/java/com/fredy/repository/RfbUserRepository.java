@@ -1,4 +1,4 @@
-package com.fredy.repository;
+ package com.fredy.repository;
 
 import com.fredy.domain.RfbUser;
 import org.springframework.stereotype.Repository;
@@ -12,5 +12,7 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface RfbUserRepository extends JpaRepository<RfbUser, Long> {
+
+
 
 }

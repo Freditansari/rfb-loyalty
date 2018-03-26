@@ -69,9 +69,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     loadAllLocation() {
         this.rfbLocationService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            page: 0,
+            size: 100,
+            sort: ['locationName,runDayOfWeek', 'ASC']}).subscribe(
                 (res: HttpResponse<RfbLocation[]>) => this.onSuccess(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -97,6 +97,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
+        alert(error);
     }
 
     private processError(response: HttpErrorResponse) {

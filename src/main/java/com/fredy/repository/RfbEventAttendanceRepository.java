@@ -13,4 +13,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface RfbEventAttendanceRepository extends JpaRepository<RfbEventAttendance, Long> {
 
+
+
+
 }

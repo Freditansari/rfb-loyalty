@@ -29,17 +29,17 @@ spring:
         type: simple
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:rfbLoyalty;DB_CLOSE_DELAY=-1
+        url: jdbc:mysql://128.199.211.144:3306/rfbLoyalty;DB_CLOSE_DELAY=-1
         name:
-        username:
-        password:
+        username: root
+        password: reseamatsih
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-        database: H2
+        database: mysql
         open-in-view: false
         show-sql: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: create
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy

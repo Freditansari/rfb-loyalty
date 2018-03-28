@@ -28,13 +28,11 @@ spring:
     cache:
         type: simple
     datasource:
-        type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://128.199.211.144:3306/rfbLoyalty;DB_CLOSE_DELAY=-1
         name:
         username: root
         password: reseamatsih
     jpa:
-        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
         database: mysql
         open-in-view: false
         show-sql: false

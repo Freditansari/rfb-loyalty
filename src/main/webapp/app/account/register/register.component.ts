@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { Register } from './register.service';
 import { LoginModalService, EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '../../shared';
-import { RfbLocation } from '../../entities/rfb-location/rfb-location.model';
-import { RfbLocationService } from '../../entities/rfb-location/rfb-location.service';
-import { JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-register',
@@ -22,30 +19,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
-    predicate: any;
-    reverse: any;
-    rfbLocations: RfbLocation[];
-    page: any;
-    itemsPerPage: any;
-    links: any;
-    totalItems: any;
-    queryCount: any;
 
     constructor(
-        private rfbLocationService: RfbLocationService,
         private loginModalService: LoginModalService,
         private registerService: Register,
         private elementRef: ElementRef,
-        private renderer: Renderer,
-        private jhiAlertService: JhiAlertService,
-        private parseLinks: JhiParseLinks
+        private renderer: Renderer
     ) {
     }
 
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
-        this.loadAllLocation();
     }
 
     ngAfterViewInit() {
@@ -67,6 +52,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         }
     }
 
+<<<<<<< HEAD
     loadAllLocation() {
         this.rfbLocationService.query({
             page: 0,
@@ -77,10 +63,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         );
     }
 
+=======
+>>>>>>> parent of a650e91... security issue in register component
     openLogin() {
         this.modalRef = this.loginModalService.open();
     }
 
+<<<<<<< HEAD
     sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
@@ -100,6 +89,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         alert(error);
     }
 
+=======
+>>>>>>> parent of a650e91... security issue in register component
     private processError(response: HttpErrorResponse) {
         this.success = null;
         if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
